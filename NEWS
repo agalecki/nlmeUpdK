@@ -1,0 +1,23 @@
+July 2013:
+
+
+1. nlmeUpdK is a companion package to nlmeU and contains scripts and functions used in [1]. 
+    pertaining to a new pdKronecker class inheriting from pdMat (see Sections 17.6-17.8 and 20.2)
+
+2. To install packages needed to run scripts from the book, please use the following instructions:
+
+    pckgs <- c("nlmeU", "nlmeUpdK", "plyr", "reshape", "RLRsim", "WWGbook", "ellipse")
+    install.packages(pckgs)
+
+3. To install lme4.0 package use: 
+
+    install.packages("lme4.0", repos = "http://R-Forge.R-project.org")
+
+4. To obtain list of scripts available in nlmeUpdK package, use the following instructions:
+
+    library(nlmeUpdK) 
+    runScript()
+
+[1] Andrzej Galecki  and Tomasz Burzykowski (2013)
+    Linear Mixed-Effects Models Uisng R: A step-by-Step Approach
+    Springer

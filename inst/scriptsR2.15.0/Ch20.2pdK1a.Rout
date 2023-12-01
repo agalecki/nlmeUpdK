@@ -1,0 +1,192 @@
+
+R version 2.15.1 (2012-06-22) -- "Roasted Marshmallows"
+Copyright (C) 2012 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-mingw32/x64 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> 
+> date()
+[1] "Thu Apr 25 18:32:06 2013"
+> sessionInfo()
+R version 2.15.1 (2012-06-22)
+Platform: x86_64-pc-mingw32/x64 (64-bit)
+
+locale:
+[1] LC_COLLATE=C                          
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+> 
+> # R20.1
+> 
+> D1 <- c(3, 9, 
++         9, 30)
+> dim(D1) <- c(2, 2)       # D1 for factor  f1
+> D2 <- c(2, 4, 
++         4, 10)     
+> dim(D2) <- c(2, 2)       # D2 for factor f2
+> D1 %x% D2                # D1 @ D2
+     [,1] [,2] [,3] [,4]
+[1,]    6   12   18   36
+[2,]   12   30   36   90
+[3,]   18   36   60  120
+[4,]   36   90  120  300
+> 
+> # R20.2
+> 
+> library(nlmeForTesting)
+> (pdId <- pdIdent(as.matrix(1), form = ~1)) # Mandatory
+Positive definite matrix structure of class pdIdent representing
+     [,1]
+[1,]    1
+> (pd1 <- pdLogChol(D1, form = ~f1-1))       # D1
+Positive definite matrix structure of class pdLogChol representing
+     [,1] [,2]
+[1,]    3    9
+[2,]    9   30
+> (pd2 <- pdLogChol(D2, form = ~f2-1))       # D2
+Positive definite matrix structure of class pdLogChol representing
+     [,1] [,2]
+[1,]    2    4
+[2,]    4   10
+> pdL1 <-                                    # The main argument
++    list(X = pdId,
++         pD1 = pd1,
++         pD2 = pd2)
+> 
+> # R203a
+> f1 <- gl(2, 1, labels = c("A","B")) 
+> f2 <- gl(2, 1, labels = c("a","b"))
+> (dt <- data.frame(f1, f2))
+  f1 f2
+1  A  a
+2  B  b
+> 
+> 
+> 
+> # R203b
+> 
+> methods(class= pdKronecker)
+ [1] Names.pdKronecker*         Names<-.pdKronecker*      
+ [3] VarCorr.pdKronecker*       [.pdKronecker*            
+ [5] coef.pdKronecker*          coef<-.pdKronecker*       
+ [7] corMatrix.pdKronecker*     formula.pdKronecker*      
+ [9] isInitialized.pdKronecker* logDet.pdKronecker*       
+[11] matrix<-.pdKronecker*      pdConstruct.pdKronecker*  
+[13] pdFactor.pdKronecker*      pdMatrix.pdKronecker*     
+[15] solve.pdKronecker*         summary.pdKronecker*      
+
+   Non-visible functions are asterisked
+> (pdK <- pdKronecker(pdL1, data = dt))      # D1 @ D2
+Positive definite matrix structure of class pdKronecker representing
+        f1A:f2a f1A:f2b f1B:f2a f1B:f2b
+f1A:f2a       6      12      18      36
+f1A:f2b      12      30      36      90
+f1B:f2a      18      36      60     120
+f1B:f2b      36      90     120     300
+> 
+> 
+> # R20.4
+> (c0x <- as.matrix(pdK[[1]]))
+            (Intercept)
+(Intercept)           6
+> (D1x <- as.matrix(pdK[[2]]))               #  Proportional to D1
+    f1A f1B
+f1A   1   3
+f1B   3  10
+> (D2x <- as.matrix(pdK[[3]]))               #  Proportional to D2
+    f2a f2b
+f2a   1   2
+f2b   2   5
+> Dx <- c0x %x% D1x %x% D2x                  #  D = D1 @ D2
+> 
+> 
+> 
+> # R20.5a
+> formula(pdK, asList = TRUE)               # List of component formulae
+[[1]]
+~1
+
+[[2]]
+~f1 - 1
+
+[[3]]
+~f2 - 1
+
+> formula(pdK)                              # One-sided formula (default)
+~f2:f1 - 1
+<environment: 0x0000000004cadd78>
+> 
+> # R20.5b
+> (pdKform <- formula(~(f2-1):(f1-1)-1))
+~(f2 - 1):(f1 - 1) - 1
+> pdKterms <- terms(pdKform)                # Terms object  
+> labels(pdKterms)                          # Expanded formula
+[1] "f2:f1"
+> attr(pdKterms, "intercept")               # Intercept omitted
+[1] 0
+> 
+> library(nlmeForTesting)
+> (nms <- Names(pdK))
+[1] "f1A:f2a" "f1A:f2b" "f1B:f2a" "f1B:f2b"
+> dimnames(Dx) <- list(nms, nms)
+> Dx
+        f1A:f2a f1A:f2b f1B:f2a f1B:f2b
+f1A:f2a       6      12      18      36
+f1A:f2b      12      30      36      90
+f1B:f2a      18      36      60     120
+f1B:f2b      36      90     120     300
+> methods(class = pdKronecker)   
+ [1] Names.pdKronecker*         Names<-.pdKronecker*      
+ [3] VarCorr.pdKronecker*       [.pdKronecker*            
+ [5] coef.pdKronecker*          coef<-.pdKronecker*       
+ [7] corMatrix.pdKronecker*     formula.pdKronecker*      
+ [9] isInitialized.pdKronecker* logDet.pdKronecker*       
+[11] matrix<-.pdKronecker*      pdConstruct.pdKronecker*  
+[13] pdFactor.pdKronecker*      pdMatrix.pdKronecker*     
+[15] solve.pdKronecker*         summary.pdKronecker*      
+
+   Non-visible functions are asterisked
+> packageVersion("nlmeForTesting")
+[1] '0.1'
+> sessionInfo()
+R version 2.15.1 (2012-06-22)
+Platform: x86_64-pc-mingw32/x64 (64-bit)
+
+locale:
+[1] LC_COLLATE=C                          
+[2] LC_CTYPE=English_United States.1252   
+[3] LC_MONETARY=English_United States.1252
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.1252    
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] nlmeForTesting_0.1
+
+loaded via a namespace (and not attached):
+[1] tools_2.15.1
+> detach(package:nlmeForTesting)
+> 
+> 
+> proc.time()
+   user  system elapsed 
+   0.39    0.00    0.40 

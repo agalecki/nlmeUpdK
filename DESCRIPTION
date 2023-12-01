@@ -1,0 +1,29 @@
+Package: nlmeUpdK
+Version: 0.3-11
+Date: $Date$
+Author: Andrzej Galecki <agalecki@umich.edu>, Tomasz Burzykowski
+Maintainer: Andrzej Galecki <agalecki@umich.edu>
+Title: New pdMat class: pdKronecker (prototype version described in Galecki,
+    Burzykowski (2013) book)
+Description: New pdMat class: pdKronecker. NOTE: This class is NOT fully
+    compatible with nlme, but returns valid results when used with lme()
+    function
+Depends:
+    stats,
+    R (>= 2.14.2)
+Imports:
+    nlme,lattice
+Suggests:
+    lattice,
+    testthat,
+    nlmeU,
+    reshape,
+    R.utils
+License: GPL (>=2)
+URL: http://www-personal.umich.edu/~agalecki/
+LazyData: yes
+Collate:
+    'pdKroneckerConstruct.R'
+    'nlmeUpdK-package.R'
+    'model.matrix.reStructU.R'
+    'pdKroneckerMethods.R'
