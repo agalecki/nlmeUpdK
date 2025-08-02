@@ -1,12 +1,13 @@
 
-R version 2.15.1 (2012-06-22) -- "Roasted Marshmallows"
-Copyright (C) 2012 The R Foundation for Statistical Computing
-ISBN 3-900051-07-0
-Platform: x86_64-pc-mingw32/x64 (64-bit)
+R version 4.5.1 (2025-06-13 ucrt) -- "Great Square Root"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
 
 R is free software and comes with ABSOLUTELY NO WARRANTY.
 You are welcome to redistribute it under certain conditions.
 Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
 
 R is a collaborative project with many contributors.
 Type 'contributors()' for more information and
@@ -16,28 +17,41 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
+[Previously saved workspace restored]
+
 > 
 > date()
-[1] "Thu Apr 25 18:32:06 2013"
+[1] "Sat Aug  2 12:44:49 2025"
 > sessionInfo()
-R version 2.15.1 (2012-06-22)
-Platform: x86_64-pc-mingw32/x64 (64-bit)
+R version 4.5.1 (2025-06-13 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 22631)
+
+Matrix products: default
+  LAPACK version 3.12.1
 
 locale:
-[1] LC_COLLATE=C                          
-[2] LC_CTYPE=English_United States.1252   
-[3] LC_MONETARY=English_United States.1252
+[1] LC_COLLATE=English_United States.utf8 
+[2] LC_CTYPE=English_United States.utf8   
+[3] LC_MONETARY=English_United States.utf8
 [4] LC_NUMERIC=C                          
-[5] LC_TIME=English_United States.1252    
+[5] LC_TIME=English_United States.utf8    
+
+time zone: America/New_York
+tzcode source: internal
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+[1] compiler_4.5.1
 > 
 > # R20.1
 > 
 > D1 <- c(3, 9, 
 +         9, 30)
 > dim(D1) <- c(2, 2)       # D1 for factor  f1
+> 
 > D2 <- c(2, 4, 
 +         4, 10)     
 > dim(D2) <- c(2, 2)       # D2 for factor f2
@@ -50,7 +64,7 @@ attached base packages:
 > 
 > # R20.2
 > 
-> library(nlmeForTesting)
+> library(nlme)
 > (pdId <- pdIdent(as.matrix(1), form = ~1)) # Mandatory
 Positive definite matrix structure of class pdIdent representing
      [,1]
@@ -81,18 +95,13 @@ Positive definite matrix structure of class pdLogChol representing
 > 
 > 
 > # R203b
-> 
+> library(nlmeUpdK)
 > methods(class= pdKronecker)
- [1] Names.pdKronecker*         Names<-.pdKronecker*      
- [3] VarCorr.pdKronecker*       [.pdKronecker*            
- [5] coef.pdKronecker*          coef<-.pdKronecker*       
- [7] corMatrix.pdKronecker*     formula.pdKronecker*      
- [9] isInitialized.pdKronecker* logDet.pdKronecker*       
-[11] matrix<-.pdKronecker*      pdConstruct.pdKronecker*  
-[13] pdFactor.pdKronecker*      pdMatrix.pdKronecker*     
-[15] solve.pdKronecker*         summary.pdKronecker*      
-
-   Non-visible functions are asterisked
+ [1] [             coef          coef<-        corMatrix     formula      
+ [6] isInitialized logDet        matrix<-      Names         Names<-      
+[11] pdConstruct   pdFactor      pdMatrix      solve         summary      
+[16] VarCorr      
+see '?methods' for accessing help and source code
 > (pdK <- pdKronecker(pdL1, data = dt))      # D1 @ D2
 Positive definite matrix structure of class pdKronecker representing
         f1A:f2a f1A:f2b f1B:f2a f1B:f2b
@@ -131,7 +140,7 @@ f2b   2   5
 
 > formula(pdK)                              # One-sided formula (default)
 ~f2:f1 - 1
-<environment: 0x0000000004cadd78>
+<environment: 0x00000241c06455a8>
 > 
 > # R20.5b
 > (pdKform <- formula(~(f2-1):(f1-1)-1))
@@ -142,7 +151,7 @@ f2b   2   5
 > attr(pdKterms, "intercept")               # Intercept omitted
 [1] 0
 > 
-> library(nlmeForTesting)
+> # library(nlmeForTesting)
 > (nms <- Names(pdK))
 [1] "f1A:f2a" "f1A:f2b" "f1B:f2a" "f1B:f2b"
 > dimnames(Dx) <- list(nms, nms)
@@ -153,40 +162,12 @@ f1A:f2b      12      30      36      90
 f1B:f2a      18      36      60     120
 f1B:f2b      36      90     120     300
 > methods(class = pdKronecker)   
- [1] Names.pdKronecker*         Names<-.pdKronecker*      
- [3] VarCorr.pdKronecker*       [.pdKronecker*            
- [5] coef.pdKronecker*          coef<-.pdKronecker*       
- [7] corMatrix.pdKronecker*     formula.pdKronecker*      
- [9] isInitialized.pdKronecker* logDet.pdKronecker*       
-[11] matrix<-.pdKronecker*      pdConstruct.pdKronecker*  
-[13] pdFactor.pdKronecker*      pdMatrix.pdKronecker*     
-[15] solve.pdKronecker*         summary.pdKronecker*      
-
-   Non-visible functions are asterisked
-> packageVersion("nlmeForTesting")
-[1] '0.1'
-> sessionInfo()
-R version 2.15.1 (2012-06-22)
-Platform: x86_64-pc-mingw32/x64 (64-bit)
-
-locale:
-[1] LC_COLLATE=C                          
-[2] LC_CTYPE=English_United States.1252   
-[3] LC_MONETARY=English_United States.1252
-[4] LC_NUMERIC=C                          
-[5] LC_TIME=English_United States.1252    
-
-attached base packages:
-[1] stats     graphics  grDevices utils     datasets  methods   base     
-
-other attached packages:
-[1] nlmeForTesting_0.1
-
-loaded via a namespace (and not attached):
-[1] tools_2.15.1
-> detach(package:nlmeForTesting)
-> 
-> 
-> proc.time()
-   user  system elapsed 
-   0.39    0.00    0.40 
+ [1] [             coef          coef<-        corMatrix     formula      
+ [6] isInitialized logDet        matrix<-      Names         Names<-      
+[11] pdConstruct   pdFactor      pdMatrix      solve         summary      
+[16] VarCorr      
+see '?methods' for accessing help and source code
+> packageVersion("nlmeUpdKronecker")
+Error in packageVersion("nlmeUpdKronecker") : 
+  there is no package called 'nlmeUpdKronecker'
+Execution halted

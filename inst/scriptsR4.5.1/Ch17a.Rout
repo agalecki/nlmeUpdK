@@ -1,0 +1,382 @@
+
+R version 4.5.1 (2025-06-13 ucrt) -- "Great Square Root"
+Copyright (C) 2025 The R Foundation for Statistical Computing
+Platform: x86_64-w64-mingw32/x64
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> ### Modify NAMESPACE in nlme package (i.e. replace model.matrix.reStruct with model.matrix.reStruct.U)
+> 
+> fun <- nlmeUpdK:::model.matrix.reStruct.U
+> environment(fun) <- .GlobalEnv
+> environment(fun)
+<environment: R_GlobalEnv>
+> 
+> 
+> library(nlme)
+> ## require(R.utils)
+> R.utils:::reassignInPackage("model.matrix.reStruct", "nlme", fun)
+> #require(testthat)
+> #as.character(body(getS3method("model.matrix","reStruct")))[2]
+> #testhat(
+> 
+> ###################################################
+> ### code chunk: Chap17a_init (script from Chapter 17 pertaining to pdKronecker class)
+> ###################################################
+> options(digits = 5, show.signif.stars = FALSE)
+> 
+> library(nlmeUpdK)  #  including pdKronecker class
+> library(lattice)
+> library(reshape)
+> sessionInfo()
+R version 4.5.1 (2025-06-13 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 22631)
+
+Matrix products: default
+  LAPACK version 3.12.1
+
+locale:
+[1] LC_COLLATE=English_United States.utf8 
+[2] LC_CTYPE=English_United States.utf8   
+[3] LC_MONETARY=English_United States.utf8
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.utf8    
+
+time zone: America/New_York
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] reshape_0.8.9   lattice_0.22-6  nlmeUpdK_0.3-11 nlme_3.1-166   
+
+loaded via a namespace (and not attached):
+[1] compiler_4.5.1    plyr_1.8.9        tools_4.5.1       Rcpp_1.1.0       
+[5] R.methodsS3_1.8.2 grid_4.5.1        R.utils_2.12.3    R.oo_1.27.0      
+> 
+> data(prt, package = "nlmeU")
+> lme.spec.form3 <- spec.fo ~ prt.f + occ.f + sex.f + age.f + bmi + fiber.f +
++    prt.f:occ.f + sex.f:age.f + prt.f:fiber.f + occ.f:fiber.f
+> 
+> fm17.3 <- 
++    lme(lme.spec.form3,                       # (17.6)
++        random = ~occ.f:fiber.f - 1|id,       # D:(17.7)
++        data = prt) 
+> 
+> ###################################################
+> ### code chunk: R17.14
+> ###################################################
+> pdId  <- pdIdent(~1)                   # c * I_1  in (17.14)
+> pd1UN <- pdLogChol(~fiber.f - 1)       # A for FiberType  
+> pd2UN <- pdLogChol(~occ.f - 1)         # B for PrePos
+> pdL1  <-                               # List of pdMat objects
++    list(X = pdId, 
++         FiberType = pd1UN,           
++         PrePos = pd2UN)          
+> (pdKnms <- names(pdL1))                # Names saved for later use
+[1] "X"         "FiberType" "PrePos"   
+> fm17.4 <-                              # M17.4
++    lme(lme.spec.form3, 
++        random = list(id = pdKronecker(pdL1)),
++        data = prt)
+> 
+> 
+> ###################################################
+> ### code chunk: R17.15
+> ###################################################
+> DmtxKron1 <- getVarCov(fm17.4)                  # D:(17.14)
+> rownames(DmtxKron1)                             # Long row/col names
+[1] "fiber.fType 1:occ.fPre" "fiber.fType 1:occ.fPos" "fiber.fType 2:occ.fPre"
+[4] "fiber.fType 2:occ.fPos"
+> nms <- c("T1:Pre", "T1:Pos", "T2:Pre", "T2:Pos")# Short names...
+> dimnames(DmtxKron1) <- list(nms, nms)           # ... assigned.
+> DmtxKron1                                       # D displayed.
+Random effects variance covariance matrix
+       T1:Pre T1:Pos T2:Pre T2:Pos
+T1:Pre 214.24 137.81 199.57 128.37
+T1:Pos 137.81 197.43 128.37 183.92
+T2:Pre 199.57 128.37 267.58 172.12
+T2:Pos 128.37 183.92 172.12 246.60
+  Standard Deviations: 14.637 14.051 16.358 15.703 
+> 
+> 
+> sgma    <- fm17.4$sigma                         # sigma...
+> (sgma2  <- sgma^2)                              # ... and sigma^2
+[1] 598.68
+> reSt <- fm17.4$modelStruct$reStruct      # Random-effects structure
+> pdKron1 <- reSt[[1]]
+> names(pdKron1) <- pdKnms                 # Component names reinstated 
+> (c1 <- as.numeric(as.matrix(pdKron1$X))) # Mandatory multiplier
+[1] 0.35785
+> c1*sgma2                                       # Compare to d_11
+[1] 214.24
+> (A1 <- as.matrix(pdKron1$FiberType))           # A for fiber type
+              fiber.fType 1 fiber.fType 2
+fiber.fType 1       1.00000       0.93155
+fiber.fType 2       0.93155       1.24900
+> (B1 <- as.matrix(pdKron1$PrePos))              # B for occasion
+         occ.fPre occ.fPos
+occ.fPre  1.00000  0.64324
+occ.fPos  0.64324  0.92157
+> # sgma2 * c1 %x% A1 %x% B1               #  D = sigma2 @ A @ B: (17.14)
+> 
+> ###################################################
+> ### code chunk: R17.16
+> ###################################################
+> pdId  <- pdIdent(~1)                     # c I_1 in ( 17.16)
+> pd1CS <- pdCompSymm(~fiber.f -1)         # A for  FiberType
+> pd2CS <- pdCompSymm(~occ.f-1)            # B for  PrePos 
+> pdL2  <- 
++     list(X = pdId,           
++          FiberType = pd1CS,              # A 
++          PrePos = pd2CS)                 # B 
+> fm17.5 <-                                # M17.5
++    lme(lme.spec.form3,               
++        random = list(id = pdKronecker(pdL2)),
++        data = prt)
+> 
+> 
+> ###################################################
+> ### code chunk: R17.17
+> ###################################################
+> DmtxKron2 <- getVarCov(fm17.5)           # D
+> dimnames(DmtxKron2) <- list(nms,nms)     # Row/col names shortened
+> DmtxKron2                                # D printed
+Random effects variance covariance matrix
+       T1:Pre T1:Pos T2:Pre T2:Pos
+T1:Pre 229.57 153.35 191.48 127.91
+T1:Pos 153.35 229.57 127.91 191.48
+T2:Pre 191.48 127.91 229.57 153.35
+T2:Pos 127.91 191.48 153.35 229.57
+  Standard Deviations: 15.152 15.152 15.152 15.152 
+> 
+> 
+> ###################################################
+> ### code chunk: R17.18
+> ###################################################
+> anova(fm17.3, fm17.4, fm17.5)        # M17.3 > M17.4  > M17.5
+       Model df   AIC   BIC logLik   Test L.Ratio p-value
+fm17.3     1 22 23084 23212 -11520                       
+fm17.4     2 17 23080 23179 -11523 1 vs 2  6.0852  0.2980
+fm17.5     3 15 23078 23165 -11524 2 vs 3  1.3176  0.5175
+> anova(fm17.3, fm17.5)                # M17.3 > M17.5
+       Model df   AIC   BIC logLik   Test L.Ratio p-value
+fm17.3     1 22 23084 23212 -11520                       
+fm17.5     2 15 23078 23165 -11524 1 vs 2  7.4028  0.3882
+> 
+> ###################################################
+> ### code chunk: R17.19
+> ###################################################
+> prt.Dep2 <-                              # Raw data transposed
++     melt(prt, measure.var = c("iso.fo", "spec.fo"),
++          variable_name = "DV")           # DV indicates dep. variable
+> lme.DV.form <-                           # Formula with interactions 
++     formula(value ~ -1 + DV + DV:(-1 + (prt.f + occ.f + fiber.f)^2 
++             + sex.f + age.f + sex.f:age.f + bmi)) 
+> pdUN <- pdLogChol(~DV-1)                 # E for DV  
+> pdL <- 
++   list(X = pdId,
++        DV = pdUN,
++        FiberType = pd1UN,
++        PrePos = pd2UN)
+> pdKnms   <- names(pdL)                   # Names saved for later use
+> lmeC     <- lmeControl(msMaxIter = 100)  # Maximum iterations
+> fm17.6 <- 
++    lme(lme.DV.form,                          # Fixed part  
++        random = list(id = pdKronecker(pdL)), # 8 random effects
++        data = prt.Dep2,
++        weights = varIdent(form = ~1|DV),     # DV-specific variance
++        control = lmeC)
+> 
+> 
+> ###################################################
+> ### code chunk: R17.20
+> ###################################################
+> DmtxDV2Kron <- getVarCov(fm17.6)
+> rownames(DmtxDV2Kron)                        # Row/col D names
+[1] "DViso.fo:fiber.fType 1:occ.fPre"  "DViso.fo:fiber.fType 1:occ.fPos" 
+[3] "DViso.fo:fiber.fType 2:occ.fPre"  "DViso.fo:fiber.fType 2:occ.fPos" 
+[5] "DVspec.fo:fiber.fType 1:occ.fPre" "DVspec.fo:fiber.fType 1:occ.fPos"
+[7] "DVspec.fo:fiber.fType 2:occ.fPre" "DVspec.fo:fiber.fType 2:occ.fPos"
+> nms <-                                         # ... shortened 
++   c("is:T1:Pre", "is:T1:Pos", "is:T2:Pre", "is:T2:Pos", 
++     "sp:T1:Pre", "sp:T1:Pos", "sp:T2:Pre", "sp:T2:Pos")
+> dimnames(DmtxDV2Kron) <- list(nms, nms)      # ... and assigned.
+> print(DmtxDV2Kron[1:4, 1:4], digits = 2)     # Block for iso.fo
+          is:T1:Pre is:T1:Pos is:T2:Pre is:T2:Pos
+is:T1:Pre     0.048     0.035     0.033     0.024
+is:T1:Pos     0.035     0.043     0.024     0.030
+is:T2:Pre     0.033     0.024     0.068     0.049
+is:T2:Pos     0.024     0.030     0.049     0.061
+> print(DmtxDV2Kron[5:8, 5:8], digits = 5)     # Block for spec.fo
+          sp:T1:Pre sp:T1:Pos sp:T2:Pre sp:T2:Pos
+sp:T1:Pre    206.37    148.91    141.27    101.94
+sp:T1:Pos    148.91    186.45    101.94    127.64
+sp:T2:Pre    141.27    101.94    290.85    209.86
+sp:T2:Pos    101.94    127.64    209.86    262.77
+> print(DmtxDV2Kron[1:4,5:8], digits = 3)      # Off-diagonal block
+          sp:T1:Pre sp:T1:Pos sp:T2:Pre sp:T2:Pos
+is:T1:Pre     1.342     0.968     0.919     0.663
+is:T1:Pos     0.968     1.213     0.663     0.830
+is:T2:Pre     0.919     0.663     1.892     1.365
+is:T2:Pos     0.663     0.830     1.365     1.709
+> print(cov2cor(DmtxDV2Kron)[1:4, 1:4],        # Corr. block for iso.fo
++       digits = 3) 
+          is:T1:Pre is:T1:Pos is:T2:Pre is:T2:Pos
+is:T1:Pre     1.000     0.759     0.577     0.438
+is:T1:Pos     0.759     1.000     0.438     0.577
+is:T2:Pre     0.577     0.438     1.000     0.759
+is:T2:Pos     0.438     0.577     0.759     1.000
+> 
+> ###################################################
+> ### code chunk: R17.21
+> ###################################################
+> (sgma   <- fm17.6$sigma)                  # sigma_1 (17.19)
+[1] 0.21513
+> (vStDV2 <- fm17.6$modelStruct$varStruct)  # delta
+Variance function structure of class varIdent representing
+ iso.fo spec.fo 
+   1.00  113.49 
+> sgma*coef(vStDV2, unconstrained = FALSE)  # sigma_2 (spec.fo)
+spec.fo 
+ 24.414 
+> reStDV2 <- fm17.6$modelStruct$reStruct    # Random-effects structure
+> DV2pdxKron  <- reStDV2[[1]]
+> names(DV2pdxKron) <- pdKnms
+> (c3 <- as.matrix(DV2pdxKron$X))           # Mandatory multiplier
+            (Intercept)
+(Intercept)      1.0366
+> (E3 <- as.matrix(DV2pdxKron$DV))          # E for dep. variables
+          DViso.fo DVspec.fo
+DViso.fo     1.000    27.978
+DVspec.fo   27.978  4301.770
+> (A3 <- as.matrix(DV2pdxKron$FiberType))   # A for fiber type (17.21)
+              fiber.fType 1 fiber.fType 2
+fiber.fType 1       1.00000       0.68455
+fiber.fType 2       0.68455       1.40935
+> (B3 <- as.matrix(DV2pdxKron$PrePos))      # B for occasion
+         occ.fPre occ.fPos
+occ.fPre  1.00000  0.72155
+occ.fPos  0.72155  0.90347
+> 
+> 
+> ###################################################
+> ### code chunk: R17.22
+> ###################################################
+> cKron3 <- sgma^2 %x% c3 %x% E3 %x% A3 %x% B3 # Kronecker product ...
+> rownames(cKron3) <- nms
+> print(cKron3, digits = 2)                    # ... printed
+           [,1]  [,2]  [,3]  [,4]   [,5]   [,6]   [,7]   [,8]
+is:T1:Pre 0.048 0.035 0.033 0.024   1.34   0.97   0.92   0.66
+is:T1:Pos 0.035 0.043 0.024 0.030   0.97   1.21   0.66   0.83
+is:T2:Pre 0.033 0.024 0.068 0.049   0.92   0.66   1.89   1.36
+is:T2:Pos 0.024 0.030 0.049 0.061   0.66   0.83   1.36   1.71
+sp:T1:Pre 1.342 0.968 0.919 0.663 206.37 148.91 141.27 101.94
+sp:T1:Pos 0.968 1.213 0.663 0.830 148.91 186.45 101.94 127.64
+sp:T2:Pre 0.919 0.663 1.892 1.365 141.27 101.94 290.85 209.86
+sp:T2:Pos 0.663 0.830 1.365 1.709 101.94 127.64 209.86 262.77
+> 
+> 
+> ###################################################
+> ### code chunk: R17.23
+> ###################################################
+> fixed.DV2.Kron1 <- summary(fm17.6)$tTable
+> fxdNms3 <- 
++    c("iso:1", "spec:1", "iso:Low", "spec:Low", "iso:Pos",
++      "spec:Pos", "iso:T2", "spec:T2", "iso:Male", "spec:Male",
++      "iso:Old", "spec:Old", "iso:BMI", "spec:BMI",
++      "iso:Low:Pos", "spec:Low:Pos", "iso:Low:T2", "spec:Low:T2",
++      "iso:Pos:T2", "spec:Pos:T2", "iso:Male:Old", "spec:Male:Old")
+> rownames(fixed.DV2.Kron1) <- fxdNms3
+> printCoefmat(fixed.DV2.Kron1, digits = 3, cs.ind = c(1, 2), 
++              dig.tst = 2, zap.ind = 5)
+                  Value Std.Error   DF t-value p-value
+iso:1           0.22321   0.20182 4858    1.11   0.269
+spec:1        125.08973  13.73722 4858    9.11  <2e-16
+iso:Low        -0.01715   0.05720 4858   -0.30   0.764
+spec:Low        2.12290   4.00826 4858    0.53   0.596
+iso:Pos         0.02793   0.03077 4858    0.91   0.364
+spec:Pos        3.99250   2.46366 4858    1.62   0.105
+iso:T2          0.03032   0.04252 4858    0.71   0.476
+spec:T2        25.37114   3.18342 4858    7.97  <2e-16
+iso:Male        0.05954   0.07093 4858    0.84   0.401
+spec:Male      -2.11648   4.81222 4858   -0.44   0.660
+iso:Old         0.01082   0.06746 4858    0.16   0.873
+spec:Old        8.08771   4.58283 4858    1.76   0.078
+iso:BMI         0.02184   0.00755 4858    2.89   0.004
+spec:BMI        0.60114   0.51341 4858    1.17   0.242
+iso:Low:Pos     0.02186   0.04061 4858    0.54   0.590
+spec:Low:Pos   -0.16111   3.13991 4858   -0.05   0.959
+iso:Low:T2      0.01656   0.05511 4858    0.30   0.764
+spec:Low:T2    -4.12294   4.01129 4858   -1.03   0.304
+iso:Pos:T2      0.06492   0.02743 4858    2.37   0.018
+spec:Pos:T2     4.10831   2.47638 4858    1.66   0.097
+iso:Male:Old    0.05800   0.09894 4858    0.59   0.558
+spec:Male:Old  -8.71959   6.72184 4858   -1.30   0.195
+> anova(fm17.6, type = "marginal")
+                 numDF denDF F-value p-value
+DV                   2  4858  45.139  <.0001
+DV:prt.f             2  4858   0.283  0.7535
+DV:occ.f             2  4858   1.437  0.2376
+DV:fiber.f           2  4858  33.586  <.0001
+DV:sex.f             2  4858   0.708  0.4926
+DV:age.f             2  4858   1.730  0.1773
+DV:bmi               2  4858   4.184  0.0153
+DV:prt.f:occ.f       2  4858   0.169  0.8449
+DV:prt.f:fiber.f     2  4858   0.767  0.4645
+DV:occ.f:fiber.f     2  4858   3.610  0.0271
+DV:sex.f:age.f       2  4858   1.561  0.2101
+> 
+> #detach("package:R.utils")
+> #detach("package:R.oo")
+> #detach("package:R.methodsS3")
+> unloadNamespace("R.utils")
+> unloadNamespace("R.oo")
+> unloadNamespace("R.methodsS3")
+> sessionInfo()
+R version 4.5.1 (2025-06-13 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 22631)
+
+Matrix products: default
+  LAPACK version 3.12.1
+
+locale:
+[1] LC_COLLATE=English_United States.utf8 
+[2] LC_CTYPE=English_United States.utf8   
+[3] LC_MONETARY=English_United States.utf8
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.utf8    
+
+time zone: America/New_York
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] reshape_0.8.9   lattice_0.22-6  nlmeUpdK_0.3-11 nlme_3.1-166   
+
+loaded via a namespace (and not attached):
+[1] compiler_4.5.1 plyr_1.8.9     tools_4.5.1    Rcpp_1.1.0     grid_4.5.1    
+> proc.time()
+   user  system elapsed 
+  14.53    1.56   18.26 
+> 
+> proc.time()
+   user  system elapsed 
+  14.53    1.56   18.26 

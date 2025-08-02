@@ -32,7 +32,7 @@ f2 <- gl(2, 1, labels = c("a","b"))
 
 
 # R203b
-library(nlmeUpdKronecker)
+library(nlmeUpdK)
 methods(class= pdKronecker)
 (pdK <- pdKronecker(pdL1, data = dt))      # D1 @ D2
 
@@ -55,12 +55,12 @@ pdKterms <- terms(pdKform)                # Terms object
 labels(pdKterms)                          # Expanded formula
 attr(pdKterms, "intercept")               # Intercept omitted
 
-library(nlmeForTesting)
+# library(nlmeForTesting)
 (nms <- Names(pdK))
 dimnames(Dx) <- list(nms, nms)
 Dx
 methods(class = pdKronecker)   
 packageVersion("nlmeUpdKronecker")
 sessionInfo()
-detach(package:nlmeUpdKronecker)
+detach(package:nlmeUpdK)
 
