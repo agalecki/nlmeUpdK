@@ -13,10 +13,10 @@
 #' @return a matrix obtained by binding together, column-wise, the model matrices for each element of formula(object)..
 #' @author Based on documentation for \code{model.matrix.reStruct} in \code{nlme} package by Jose Pinheiro and Douglas Bates.
 ##' @seealso \code{\link{model.matrix}}
-##' @examples
-##'  \dontrun{
-##'   Pwr (fm1)
-#' }
+## #' @examples
+## #'  \dontrun{
+## #'   Pwr (fm1)
+## #' }
 
 model.matrix.reStruct.U<-
 function (object, data, contrast = NULL, ...) 

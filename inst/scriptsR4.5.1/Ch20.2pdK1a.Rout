@@ -21,7 +21,7 @@ Type 'q()' to quit R.
 
 > 
 > date()
-[1] "Sat Aug  2 12:47:20 2025"
+[1] "Sat Aug  2 12:50:11 2025"
 > sessionInfo()
 R version 4.5.1 (2025-06-13 ucrt)
 Platform: x86_64-w64-mingw32/x64
@@ -140,7 +140,7 @@ f2b   2   5
 
 > formula(pdK)                              # One-sided formula (default)
 ~f2:f1 - 1
-<environment: 0x000001599460a5a8>
+<environment: 0x000001fe8f4065a8>
 > 
 > # R20.5b
 > (pdKform <- formula(~(f2-1):(f1-1)-1))
@@ -167,7 +167,37 @@ f1B:f2b      36      90     120     300
 [11] pdConstruct   pdFactor      pdMatrix      solve         summary      
 [16] VarCorr      
 see '?methods' for accessing help and source code
-> packageVersion("nlmeUpdKronecker")
-Error in packageVersion("nlmeUpdKronecker") : 
-  there is no package called 'nlmeUpdKronecker'
-Execution halted
+> packageVersion("nlmeUpdK")
+[1] '0.3.11'
+> sessionInfo()
+R version 4.5.1 (2025-06-13 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 22631)
+
+Matrix products: default
+  LAPACK version 3.12.1
+
+locale:
+[1] LC_COLLATE=English_United States.utf8 
+[2] LC_CTYPE=English_United States.utf8   
+[3] LC_MONETARY=English_United States.utf8
+[4] LC_NUMERIC=C                          
+[5] LC_TIME=English_United States.utf8    
+
+time zone: America/New_York
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] nlmeUpdK_0.3-11 nlme_3.1-166   
+
+loaded via a namespace (and not attached):
+[1] compiler_4.5.1 tools_4.5.1    grid_4.5.1     lattice_0.22-6
+> detach(package:nlmeUpdK)
+> 
+> 
+> proc.time()
+   user  system elapsed 
+   0.17    0.14    0.37 
