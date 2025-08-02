@@ -60,7 +60,7 @@ attr(pdKterms, "intercept")               # Intercept omitted
 dimnames(Dx) <- list(nms, nms)
 Dx
 methods(class = pdKronecker)   
-packageVersion("nlmeUpdKronecker")
+packageVersion("nlmeUpdK")
 sessionInfo()
 detach(package:nlmeUpdK)
 

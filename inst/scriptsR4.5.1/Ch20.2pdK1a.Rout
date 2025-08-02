@@ -21,7 +21,7 @@ Type 'q()' to quit R.
 
 > 
 > date()
-[1] "Sat Aug  2 12:44:49 2025"
+[1] "Sat Aug  2 12:47:20 2025"
 > sessionInfo()
 R version 4.5.1 (2025-06-13 ucrt)
 Platform: x86_64-w64-mingw32/x64
@@ -140,7 +140,7 @@ f2b   2   5
 
 > formula(pdK)                              # One-sided formula (default)
 ~f2:f1 - 1
-<environment: 0x00000241c06455a8>
+<environment: 0x000001599460a5a8>
 > 
 > # R20.5b
 > (pdKform <- formula(~(f2-1):(f1-1)-1))
