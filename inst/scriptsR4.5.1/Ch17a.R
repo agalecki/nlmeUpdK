@@ -178,9 +178,10 @@ printCoefmat(fixed.DV2.Kron1, digits = 3, cs.ind = c(1, 2),
 anova(fm17.6, type = "marginal")
 
 #detach("package:R.utils")
-detach("package:R.oo")
-detach("package:R.methodsS3")
+#detach("package:R.oo")
+#detach("package:R.methodsS3")
 unloadNamespace("R.utils")
 unloadNamespace("R.oo")
 unloadNamespace("R.methodsS3")
 sessionInfo()
+proc.time()

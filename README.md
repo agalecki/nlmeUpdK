@@ -9,6 +9,6 @@ devtools::install_github("agalecki/nlmeUpdK")
 ```
 library(nlmeUpdK)
 path <- system.file(package = "nlmeUpdK")
-ch17 <- paste0(path, "/scriptsR2.15.0/Ch17a.R")
+ch17 <- paste0(path, "/scriptsR4.5.1/Ch17a.R")
 source(ch17)
 ```
