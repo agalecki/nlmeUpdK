@@ -2,9 +2,11 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{pdMatrix.pdKronecker}
 \alias{pdMatrix.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Extract Matrix from pdKronecker}
 \usage{
-pdMatrix.pdKronecker(object, factor = FALSE)
+\method{pdMatrix}{pdKronecker}(object, factor = FALSE)
+
+\method{pdMatrix}{pdKronecker}(object, factor = FALSE)
 }
 \arguments{
 \item{object}{A `pdKronecker` object.}
@@ -13,11 +15,12 @@ pdMatrix.pdKronecker(object, factor = FALSE)
 }
 \value{
 A matrix.
+
+A matrix.
 }
 \description{
-Extract Matrix from pdKronecker
-}
-\details{
+Returns the matrix representation of a `pdKronecker` object, optionally as a factor.
+
 Returns the matrix representation of a `pdKronecker` object, optionally as a factor.
 }
 \author{

@@ -2,22 +2,25 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{logDet.pdKronecker}
 \alias{logDet.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Compute Log-Determinant of pdKronecker}
 \usage{
-logDet.pdKronecker(object, ...)
+\method{logDet}{pdKronecker}(object, ...)
+
+\method{logDet}{pdKronecker}(object, ...)
 }
 \arguments{
 \item{object}{A `pdKronecker` object.}
 
-\item{...}{Additional arguments.}
+\item{...}{Additional arguments (currently ignored).}
 }
 \value{
 Numeric; the log-determinant.
+
+Numeric; the log-determinant.
 }
 \description{
-Compute Log-Determinant of pdKronecker
-}
-\details{
+Computes the log-determinant of a `pdKronecker` object.
+
 Computes the log-determinant of a `pdKronecker` object.
 }
 \author{

@@ -2,20 +2,23 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{isInitialized.pdKronecker}
 \alias{isInitialized.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Check Initialization of pdKronecker}
 \usage{
-isInitialized.pdKronecker(object)
+\method{isInitialized}{pdKronecker}(object)
+
+\method{isInitialized}{pdKronecker}(object)
 }
 \arguments{
 \item{object}{A `pdKronecker` object.}
 }
 \value{
 Logical; `TRUE` if all components are initialized.
+
+Logical; `TRUE` if all components are initialized.
 }
 \description{
-Check Initialization of pdKronecker
-}
-\details{
+Checks if a `pdKronecker` object is initialized.
+
 Checks if a `pdKronecker` object is initialized.
 }
 \author{

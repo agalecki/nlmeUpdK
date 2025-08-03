@@ -2,9 +2,11 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{matrix<-.pdKronecker}
 \alias{matrix<-.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Assign Matrix to pdKronecker}
 \usage{
-matrix.pdKronecker(object) <- value
+\method{matrix}{pdKronecker}(object) <- value
+
+\method{matrix}{pdKronecker}(object) <- value
 }
 \arguments{
 \item{object}{A `pdKronecker` object.}
@@ -13,11 +15,12 @@ matrix.pdKronecker(object) <- value
 }
 \value{
 The modified `pdKronecker` object.
+
+The modified `pdKronecker` object.
 }
 \description{
-Assign Matrix to pdKronecker
-}
-\details{
+Assigns a matrix to a `pdKronecker` object, updating its component matrices.
+
 Assigns a matrix to a `pdKronecker` object, updating its component matrices.
 }
 \author{

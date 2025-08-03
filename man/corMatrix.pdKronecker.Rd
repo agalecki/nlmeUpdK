@@ -2,22 +2,25 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{corMatrix.pdKronecker}
 \alias{corMatrix.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Extract Correlation Matrix from pdKronecker}
 \usage{
-corMatrix.pdKronecker(object, ...)
+\method{corMatrix}{pdKronecker}(object, ...)
+
+\method{corMatrix}{pdKronecker}(object, ...)
 }
 \arguments{
 \item{object}{A `pdKronecker` object.}
 
-\item{...}{Additional arguments.}
+\item{...}{Additional arguments (currently ignored).}
 }
 \value{
 A correlation matrix with standard deviations as an attribute.
+
+A correlation matrix with standard deviations as an attribute.
 }
 \description{
-Extract Correlation Matrix from pdKronecker
-}
-\details{
+Returns the correlation matrix of a `pdKronecker` object.
+
 Returns the correlation matrix of a `pdKronecker` object.
 }
 \author{

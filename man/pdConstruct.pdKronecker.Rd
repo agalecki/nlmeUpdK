@@ -4,7 +4,7 @@
 \alias{pdConstruct.pdKronecker}
 \title{File: pdKroneckerConstruct.txt}
 \usage{
-pdConstruct.pdKronecker(
+\method{pdConstruct}{pdKronecker}(
   object,
   value = numeric(0),
   form = formula(object, TRUE),

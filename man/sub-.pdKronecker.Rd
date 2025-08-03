@@ -2,9 +2,11 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{[.pdKronecker}
 \alias{[.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Subset pdKronecker Object}
 \usage{
-\method{[}{pdKronecker}(x, i, j, drop = TRUE)
+\method{[}{pdKronecker}(x, i, j, drop = TRUE, ...)
+
+\method{[}{pdKronecker}(x, i, j, drop = TRUE, ...)
 }
 \arguments{
 \item{x}{A `pdKronecker` object.}
@@ -15,15 +17,17 @@
 
 \item{drop}{Logical; if `TRUE`, drops dimensions when possible.}
 
-\item{...}{Additional arguments.}
+\item{...}{Additional arguments (currently ignored).}
 }
 \value{
 A matrix or a `pdKronecker` object.
+
+A matrix or a `pdKronecker` object.
 }
 \description{
-Subset pdKronecker Object
-}
-\details{
+Subsets a `pdKronecker` object, returning either a matrix or a new `pdKronecker` object
+based on the indices provided.
+
 Subsets a `pdKronecker` object, returning either a matrix or a new `pdKronecker` object
 based on the indices provided.
 }

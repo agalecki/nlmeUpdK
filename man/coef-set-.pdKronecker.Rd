@@ -2,24 +2,27 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{coef<-.pdKronecker}
 \alias{coef<-.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Assign Coefficients to pdKronecker}
 \usage{
-coef.pdKronecker(object, ...) <- value
+\method{coef}{pdKronecker}(object, ...) <- value
+
+\method{coef}{pdKronecker}(object, ...) <- value
 }
 \arguments{
 \item{object}{A `pdKronecker` object.}
 
-\item{...}{Additional arguments.}
+\item{...}{Additional arguments (currently ignored).}
 
 \item{value}{Numeric vector of coefficients.}
 }
 \value{
 The modified `pdKronecker` object.
+
+The modified `pdKronecker` object.
 }
 \description{
-Assign Coefficients to pdKronecker
-}
-\details{
+Assigns new coefficients to a `pdKronecker` object.
+
 Assigns new coefficients to a `pdKronecker` object.
 }
 \author{

@@ -2,8 +2,10 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{formula.pdKronecker}
 \alias{formula.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Extract Formula from pdKronecker}
 \usage{
+\method{formula}{pdKronecker}(x, asList = FALSE, ...)
+
 \method{formula}{pdKronecker}(x, asList = FALSE, ...)
 }
 \arguments{
@@ -11,15 +13,16 @@
 
 \item{asList}{Logical; if `TRUE`, returns a list of formulas.}
 
-\item{...}{Additional arguments.}
+\item{...}{Additional arguments (currently ignored).}
 }
 \value{
 A formula or list of formulas.
+
+A formula or list of formulas.
 }
 \description{
-Extract Formula from pdKronecker
-}
-\details{
+Returns the formula associated with a `pdKronecker` object, optionally as a list.
+
 Returns the formula associated with a `pdKronecker` object, optionally as a list.
 }
 \author{

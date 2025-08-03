@@ -1,15 +1,20 @@
 Package: nlmeUpdK
-Version: 0.3-15
-Date: $Date$
+Version: 0.3-20
+Date: 2025-08-03
 Authors@R: c(
    person("Andrzej", "Galecki", email = "agalecki@umich.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-3058-1312")),
    person("Tomasz", "Burzykowski", email = "tomasz.burzykowski@uhasselt.be", role = "aut", comment = c(ORCID = "0000-0003-3378-975X"))
    )
 Maintainer: Andrzej Galecki <agalecki@umich.edu>
-Title: New pdMat class: pdKronecker (prototype version described in Galecki,
-    Burzykowski (2013) book)
-Description: New pdMat class pdKronecker. This class is NOT fully
-    compatible with nlme, but returns valid results when used with lme() function
+Title: New pdMat Class: pdKronecker for Linear Mixed-Effects Models
+Description: The nlmeUpdK package introduces a new pdMat class, 
+    pdKronecker, as a prototype described in Galecki and Burzykowski (2013).
+    This class is not fully compatible with the nlme package but produces
+    valid results when used with the lme() function. Upon loading, nlmeUpdK
+    replaces the internal nlme function model.matrix.reStruct with
+    model.matrix.reStruct.U to enhance support for random effects structures,
+    particularly for pdKronecker objects. This modification is session-specific
+    and reversible upon unloading the package.
 Depends:
     stats,
     R (>= 3.5.0)
@@ -25,4 +30,3 @@ Encoding: UTF-8
 RoxygenNote: 7.3.2
 License: GPL-2
 URL: https://github.com/agalecki/nlmeUpdK
-

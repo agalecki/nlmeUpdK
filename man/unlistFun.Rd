@@ -2,8 +2,10 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{unlistFun}
 \alias{unlistFun}
-\title{File: pdKroneckerMethods.txt}
+\title{Unlist Names for pdKronecker}
 \usage{
+unlistFun(namesList)
+
 unlistFun(namesList)
 }
 \arguments{
@@ -11,11 +13,12 @@ unlistFun(namesList)
 }
 \value{
 A character vector of combined names.
+
+A character vector of combined names.
 }
 \description{
-Unlist Names for pdKronecker
-}
-\details{
+Creates a character vector of names by combining names from a list using a Kronecker product-like structure.
+
 Creates a character vector of names by combining names from a list using a Kronecker product-like structure.
 }
 \author{

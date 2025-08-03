@@ -2,20 +2,23 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{pdFactor.pdKronecker}
 \alias{pdFactor.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Extract Factor of pdKronecker}
 \usage{
-pdFactor.pdKronecker(object)
+\method{pdFactor}{pdKronecker}(object)
+
+\method{pdFactor}{pdKronecker}(object)
 }
 \arguments{
 \item{object}{A `pdKronecker` object.}
 }
 \value{
 A matrix representing the factor.
+
+A matrix representing the factor.
 }
 \description{
-Extract Factor of pdKronecker
-}
-\details{
+Returns the factor of a `pdKronecker` matrix.
+
 Returns the factor of a `pdKronecker` matrix.
 }
 \author{

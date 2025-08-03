@@ -2,7 +2,7 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{solve.pdKronecker}
 \alias{solve.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Solve pdKronecker Object}
 \usage{
 \method{solve}{pdKronecker}(a, b, ...)
 }
@@ -11,15 +11,12 @@
 
 \item{b}{Optional; not used.}
 
-\item{...}{Additional arguments.}
+\item{...}{Additional arguments (currently ignored).}
 }
 \value{
 A `pdKronecker` object representing the inverse.
 }
 \description{
-Solve pdKronecker Object
-}
-\details{
 Computes the inverse of a `pdKronecker` object by solving its component matrices.
 }
 \author{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{print.pdKronecker}
 \alias{print.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Print pdKronecker Object}
 \usage{
 \method{print}{pdKronecker}(x, opt = 1, ...)
 }
@@ -17,9 +17,6 @@
 Invisibly returns the object.
 }
 \description{
-Print pdKronecker Object
-}
-\details{
 Prints a `pdKronecker` object, displaying its matrix and component covariance profiles.
 }
 \author{

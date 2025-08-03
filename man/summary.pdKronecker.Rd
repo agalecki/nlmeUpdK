@@ -11,7 +11,7 @@
 
 \item{structName}{Character; name of the structure (default: "pdKronecker").}
 
-\item{...}{Additional arguments.}
+\item{...}{Additional arguments (currently ignored).}
 }
 \value{
 A summary object of class `summary.pdMatX`.

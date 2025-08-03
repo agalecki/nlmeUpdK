@@ -2,24 +2,21 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{VarCorr.pdKronecker}
 \alias{VarCorr.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Variance-Covariance Matrix for pdKronecker}
 \usage{
-VarCorr.pdKronecker(x, sigma = 1, rdig = 3)
+\method{VarCorr}{pdKronecker}(x, sigma = 1, ...)
 }
 \arguments{
 \item{x}{A `pdKronecker` object.}
 
 \item{sigma}{Numeric; standard deviation scaling factor (default: 1).}
 
-\item{rdig}{Integer; number of digits for rounding (default: 3).}
+\item{...}{Additional arguments; `rdig` can be specified as an integer for the number of digits for rounding (default: 3).}
 }
 \value{
 A matrix of variance-covariance components.
 }
 \description{
-Variance-Covariance Matrix for pdKronecker
-}
-\details{
 Returns the variance-covariance matrix components of a `pdKronecker` object.
 }
 \author{

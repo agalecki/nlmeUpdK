@@ -2,8 +2,10 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{coef.pdKronecker}
 \alias{coef.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Extract Coefficients from pdKronecker}
 \usage{
+\method{coef}{pdKronecker}(object, unconstrained = TRUE, ...)
+
 \method{coef}{pdKronecker}(object, unconstrained = TRUE, ...)
 }
 \arguments{
@@ -11,15 +13,16 @@
 
 \item{unconstrained}{Logical; if `TRUE`, returns unconstrained coefficients.}
 
-\item{...}{Additional arguments.}
+\item{...}{Additional arguments (currently ignored).}
 }
 \value{
 A numeric vector of coefficients.
+
+A numeric vector of coefficients.
 }
 \description{
-Extract Coefficients from pdKronecker
-}
-\details{
+Extracts coefficients from a `pdKronecker` object, optionally in unconstrained form.
+
 Extracts coefficients from a `pdKronecker` object, optionally in unconstrained form.
 }
 \author{

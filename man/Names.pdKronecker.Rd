@@ -2,24 +2,27 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{Names.pdKronecker}
 \alias{Names.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Extract Names from pdKronecker}
 \usage{
-Names.pdKronecker(object, asList = FALSE, ...)
+\method{Names}{pdKronecker}(object, asList = FALSE, ...)
+
+\method{Names}{pdKronecker}(object, asList = FALSE, ...)
 }
 \arguments{
 \item{object}{A `pdKronecker` object.}
 
 \item{asList}{Logical; if `TRUE`, returns a list of names.}
 
-\item{...}{Additional arguments.}
+\item{...}{Additional arguments (currently ignored).}
 }
 \value{
 A character vector or list of names.
+
+A character vector or list of names.
 }
 \description{
-Extract Names from pdKronecker
-}
-\details{
+Returns the names of a `pdKronecker` object, optionally as a list.
+
 Returns the names of a `pdKronecker` object, optionally as a list.
 }
 \author{

@@ -2,22 +2,27 @@
 % Please edit documentation in R/pdKroneckerMethods.R
 \name{Names<-.pdKronecker}
 \alias{Names<-.pdKronecker}
-\title{File: pdKroneckerMethods.txt}
+\title{Assign Names to pdKronecker}
 \usage{
-Names.pdKronecker(object, ...) <- value
+\method{Names}{pdKronecker}(object, ...) <- value
+
+\method{Names}{pdKronecker}(object, ...) <- value
 }
 \arguments{
 \item{object}{A `pdKronecker` object.}
+
+\item{...}{Additional arguments (currently ignored).}
 
 \item{value}{A character vector or list of names.}
 }
 \value{
 The modified `pdKronecker` object.
+
+The modified `pdKronecker` object.
 }
 \description{
-Assign Names to pdKronecker
-}
-\details{
+Assigns new names to a `pdKronecker` object.
+
 Assigns new names to a `pdKronecker` object.
 }
 \author{
