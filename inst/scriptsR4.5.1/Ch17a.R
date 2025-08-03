@@ -1,9 +1,16 @@
-### Modify NAMESPACE in nlme package (i.e. replace model.matrix.reStruct with model.matrix.reStruct.U)
+#### Replace the function in nlme namespace (i.e. replace model.matrix.reStruct with model.matrix.reStruct.U)
 
 fun <- nlmeUpdK:::model.matrix.reStruct.U
 environment(fun) <- .GlobalEnv
 environment(fun)
 
+unlockBinding("model.matrix.reStruct", asNamespace("nlme"))
+assign("model.matrix.reStruct", fun, envir = asNamespace("nlme"))
+lockBinding("model.matrix.reStruct", asNamespace("nlme"))
+
+# Verify the replacement
+environment(get("model.matrix.reStruct", envir = asNamespace("nlme")))
+# Should output: <environment: R_GlobalEnv>
 
 library(nlme)
 ## require(R.utils)
