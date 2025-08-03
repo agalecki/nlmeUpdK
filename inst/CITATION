@@ -2,10 +2,10 @@ citHeader("To cite the nlmeUpdK package in publications use:")
 
 citEntry(entry = "Book",
          title = "Linear Mixed-Effects Models Using R: A Step-by-Step Approach",
-         author = personList(as.person("Andrzej Ga{\l}ecki"), 
+         author = personList(as.person("Andrzej Galecki"), 
                              as.person("Tomasz Burzykowski")),
 	 publisher = "Springer",
-	       edition      = "First",
+	 edition      = "First",
          address      = "New York",
          year         = 2013,
          note         = "ISBN 978-1-4614-3899-1",

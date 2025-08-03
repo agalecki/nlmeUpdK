@@ -5,45 +5,28 @@
 #' Companion package to nlmeU. It contains auxiliary functions pertaining to pdKronecker class introduced in Galecki and Burzykowski book (2013). 
 #' Package under development.
 #' 
-#' @name nlmeUpdK-package
 #' @aliases nlmeUpdK
-#' @docType package
-#' @title Auxiliary functions pertaining to pdKronecker class for Galecki and Burzykowski book 2013.
-#' @author \email{agalecki@@umich.edu}, \email{Tomasz Burzykowski <tomasz.burzykowski@@uhasselt.be>}
+#'
+#' nlmeUpdK: Companion Package to nlmeU for pdKronecker Class
+#'
+#' The `nlmeUpdK` package is a companion to the `nlmeU` package, providing auxiliary functions
+#' for the `pdKronecker` class introduced in Galecki and Burzykowski (2013). It includes
+#' functionality for constructing and manipulating positive-definite Kronecker product matrices
+#' and related methods for random effects structures. The package is under development.
+#'
+#' @aliases nlmeUpdK
+#' @title Auxiliary Functions for pdKronecker Class
+#' @author Andrzej Galecki \email{agalecki@@umich.edu}, Tomasz Burzykowski \email{tomasz.burzykowski@@uhasselt.be}
 #' @keywords package
-#' @seealso \code{\link{package:nlmeU}}
-NULL
-
-
-#' @importFrom nlme "coef<-" "matrix<-" "Names<-" corMatrix isInitialized logDet Names pdConstruct
-#' @importFrom nlme pdFactor pdMatrix VarCorr
-
-#' @export          "coef<-" "matrix<-" "Names<-" corMatrix isInitialized logDet Names pdConstruct 
-#' @export          pdFactor pdMatrix VarCorr
-
+#' @seealso \code{\link[nlmeU]{nlmeU}}
+#' @references
+#' Galecki, A., & Burzykowski, T. (2013). *Linear Mixed-Effects Models Using R: A Step-by-Step Approach*.
+#' Springer.
+#' @importFrom nlme coef<- matrix<- Names<- corMatrix isInitialized logDet Names pdConstruct pdFactor pdMatrix VarCorr
 #' @importFrom nlme Dim asOneFormula getCovariateFormula splitFormula getResponseFormula pdMat
-#' @export          Dim asOneFormula getCovariateFormula splitFormula getResponseFormula pdMat
+#' @importFrom stats coef contrasts formula model.frame model.matrix terms
+#' @export coef<- matrix<- Names<- corMatrix isInitialized logDet Names pdConstruct pdFactor pdMatrix VarCorr
+#' @export Dim asOneFormula getCovariateFormula splitFormula getResponseFormula pdMat
+#' @export pdKronecker model.matrix.reStruct.U unlistFun
+#' _PACKAGE
 
-########
-#' @export pdKronecker
-#' @export model.matrix.reStruct.U
-#' @export unlistFun
-
-###  #S3method "matrix<-", reStruct)
-#' @S3method "["  pdKronecker
-#' @S3method coef  pdKronecker
-#' @S3method "coef<-"  pdKronecker
-#' @S3method corMatrix  pdKronecker
-#' @S3method formula  pdKronecker
-#' @S3method isInitialized  pdKronecker
-#' @S3method logDet  pdKronecker
-#' @S3method "matrix<-"  pdKronecker
-#' @S3method Names  pdKronecker
-#' @S3method "Names<-"  pdKronecker
-#' @S3method pdConstruct  pdKronecker
-#' @S3method pdFactor  pdKronecker
-#' @S3method pdMatrix  pdKronecker
-#' @S3method solve  pdKronecker
-#' @S3method summary  pdKronecker
-#' @S3method VarCorr  pdKronecker
-NULL

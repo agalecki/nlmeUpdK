@@ -1,48 +1,27 @@
-###  pdKronecker class
-###
-### Copyright 2011  Andrzej Galecki <agalecki@umich.edu>,
-###                 Tomasz Burzykowski
-###
-###  This program is free software; you can redistribute it and/or modify
-###  it under the terms of the GNU General Public License as published by
-###  the Free Software Foundation; either version 2 of the License, or
-###  (at your option) any later version.
-#
-###  This program is distributed in the hope that it will be useful,
-###  but WITHOUT ANY WARRANTY; without even the implied warranty of
-###  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-###  GNU General Public License for more details.
-#
-###  A copy of the GNU General Public License is available at
-###  http://www.r-project.org/Licenses/
-#
-
-
-# pdKronecker
-# KroneckAux
-# pdConstruct.pdKronecker
-
-## -> pdKronecker function
-#' Positive-Definite Kronecker product Matrix
+#' File: pdKroneckerConstruct.txt
 #'
-#' This function is a constructor for the pdKronecker class, representing a positive-definite matrix based Kronecker product 
-#' of the underlying positive-definite matrices representing internally individual pdMat objects. 
+#' Construct a Positive-Definite Kronecker Product Matrix
 #'
-#' @param value a list with elements to be pdMat objects. First element is of \code{pdIdent} class and represents scale multiplier.  
-#' @param form character string containing package name. By default nlmeU.
-#' @param nam subdirectory containing scripts. By default: scriptsR2.15.0.
-#' @param data Used by source function. By default set to TRUE.
-#' @return a pdKronecker object representing a positive-definite Kronecker product matrix, also inheriting from class pdMat.
-#' @author Andrzej Galecki and Tomasz Burzykowski
+#' This function constructs a `pdKronecker` object, representing a positive-definite matrix
+#' based on the Kronecker product of underlying positive-definite matrices, each represented
+#' by individual `pdMat` objects. The first element is of class `pdIdent` and acts as a scale
+#' multiplier.
+#'
+#' @param value A list with elements that are `pdMat` objects. The first element must be of
+#'   class `pdIdent`. Defaults to `numeric(0)`.
+#' @param form A list of formulas specifying the structure of the matrices. Defaults to `NULL`.
+#' @param nam A list of names for the matrices. Defaults to `NULL`.
+#' @param data A data frame used by the source function. Defaults to `sys.frame(sys.parent())`.
+#' @return A `pdKronecker` object, also inheriting from class `pdMat`, representing a
+#'   positive-definite Kronecker product matrix.
+#' @author Andrzej Galecki, Tomasz Burzykowski
 #' @export
-#' @examples runScript()
-#'
-
-
-pdKronecker <- function (value = numeric(0), 
-   form = NULL, nam = NULL, data = sys.frame(sys.parent())) 
-{
-
+#' @examples
+#' \dontrun{
+#'   runScript()
+#' }
+pdKronecker <- function(value = numeric(0), form = NULL, nam = NULL,
+                        data = sys.frame(sys.parent())) {
    .functionLabel <- "pdKronecker"                 # Function label (recommended)
    .traceR <- attr(options()$traceR, "fun")
    .traceR <-  if (is.null(.traceR)) function(...){} else .traceR      
@@ -55,55 +34,29 @@ pdKronecker <- function (value = numeric(0),
     pdConstruct(object, value, form, nam, data)
 }
 
-KroneckAux  <- function(pdx){
-## pdx is pdk list or object 
-## All components need to be initialized
-
-attrx <- attributes(pdx)
-
-coefsList <- lapply(pdx, FUN=function(el) coef(el,unconstrained=TRUE))
-coefSum <- sum(sapply(coefsList, FUN=function(el) el[1]))
-
-for (i in seq_along(pdx)){
-pdxi <- pdx[[i]]
-clss <- class(pdxi)[1]
-if (! (clss %in% c("pdDiag","pdIdent","pdCompSymm","pdLogChol"))) stop("Class:",
-    clss, " not allowed") 
-coefs <- coefsList[[i]]
-coefs1 <- coefs
-if (clss=="pdDiag")     coefs1 <- coefs - coefs[1] 
-if (clss=="pdIdent")    coefs1 <- 0 
-if (clss=="pdCompSymm") coefs1[1] <- 0 
-if (clss=="pdLogChol"){
-Ncol <- round((sqrt(8 * length(coefs) + 1) - 1)/2)
-x1 <- exp(-coefs[1])
-
-coefs1[1:Ncol] <- coefs[1:Ncol] - coefs[1]
-
-coefs1[(Ncol+1):length(coefs)] <- x1* coefs[(Ncol+1):length(coefs)] 
-}
-
-if (is.na(coefs1)[1]) coefs1 <- numeric(0)
-coef(pdxi) <- coefs1
-pdx[[i]] <- pdxi
-}
-coef(pdx[[1]]) <- coefSum
-attributes(pdx) <- attrx
-pdx   # Rescaled coefficients
-}
-
-
-pdConstruct.pdKronecker <-
-function (object, 
-    value = numeric(0), 
-    form = formula(object, TRUE),
-    nam = Names(object, TRUE), 
-    data = sys.frame(sys.parent()), 
-    pdClass = sapply(object,FUN=function(el) class(el)[1]) , ...) 
-{
-
-
-   .functionLabel <- "pdConstruct.pdKronecker"                 # Function label (recommended)
+#' File: pdKroneckerConstruct.txt
+#'
+#' Construct pdKronecker Object
+#'
+#' Constructs a `pdKronecker` object from provided values, formulas, and names, ensuring
+#' compatibility of dimensions and proper initialization of component `pdMat` objects.
+#'
+#' @param object A `pdKronecker` object to be constructed.
+#' @param value A list, matrix, or numeric vector specifying the initial values.
+#' @param form A list of formulas for the component matrices.
+#' @param nam A list of names for the component matrices.
+#' @param data A data frame for evaluating formulas.
+#' @param pdClass A character vector specifying the classes of component `pdMat` objects.
+#' @param ... Additional arguments passed to methods.
+#' @return A constructed `pdKronecker` object.
+#' @author Andrzej Galecki, Tomasz Burzykowski
+#' @export
+pdConstruct.pdKronecker <- function(object, value = numeric(0),
+                                    form = formula(object, TRUE),
+                                    nam = Names(object, TRUE),
+                                    data = sys.frame(sys.parent()),
+                                    pdClass = sapply(object, function(el) class(el)[1]), ...) {
+   .functionLabel <- "PredConstruct.pdKronecker"                 # Function label (recommended)
    .traceR <- attr(options()$traceR, "fun")
    .traceR <-  if (is.null(.traceR)) function(...){} else .traceR      
 
@@ -352,4 +305,47 @@ function (object,
     }
 }
 
+#' File: pdKroneckerConstruct.txt
+#'
+#' Rescale Coefficients for pdKronecker Components
+#'
+#' Rescales coefficients of component `pdMat` objects in a `pdKronecker` object, ensuring
+#' the first component (of class `pdIdent`) holds the sum of coefficients.
+#'
+#' @param pdx A list or object of class `pdKronecker` with initialized components.
+#' @return The rescaled `pdKronecker` object.
+#' @author Andrzej Galecki, Tomasz Burzykowski
+#' @keywords internal
+KroneckAux <- function(pdx) {
+    attrx <- attributes(pdx)
 
+    coefsList <- lapply(pdx, FUN=function(el) coef(el,unconstrained=TRUE))
+    coefSum <- sum(sapply(coefsList, FUN=function(el) el[1]))
+
+    for (i in seq_along(pdx)){
+        pdxi <- pdx[[i]]
+        clss <- class(pdxi)[1]
+        if (! (clss %in% c("pdDiag","pdIdent","pdCompSymm","pdLogChol"))) stop("Class:",
+            clss, " not allowed") 
+        coefs <- coefsList[[i]]
+        coefs1 <- coefs
+        if (clss=="pdDiag")     coefs1 <- coefs - coefs[1] 
+        if (clss=="pdIdent")    coefs1 <- 0 
+        if (clss=="pdCompSymm") coefs1[1] <- 0 
+        if (clss=="pdLogChol"){
+            Ncol <- round((sqrt(8 * length(coefs) + 1) - 1)/2)
+            x1 <- exp(-coefs[1])
+
+            coefs1[1:Ncol] <- coefs[1:Ncol] - coefs[1]
+
+            coefs1[(Ncol+1):length(coefs)] <- x1* coefs[(Ncol+1):length(coefs)] 
+        }
+
+        if (is.na(coefs1)[1]) coefs1 <- numeric(0)
+        coef(pdxi) <- coefs1
+        pdx[[i]] <- pdxi
+    }
+    coef(pdx[[1]]) <- coefSum
+    attributes(pdx) <- attrx
+    pdx   # Rescaled coefficients
+}

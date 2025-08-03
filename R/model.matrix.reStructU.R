@@ -1,31 +1,29 @@
-## -> model.matrix.reStruct.U function
-#' This function is used to replace \code{\link{model.matrix.reStruct}} function in namespace of nlme package 
+#' File: model.matrix.reStructU.txt
 #'
-#' This function is used to replace \code{\link{model.matrix.reStruct}} function in namespace of nlme package 
+#' Create Model Matrix for reStruct Object
 #'
+#' Replaces `model.matrix.reStruct` in the `nlme` package, creating a model matrix by
+#' binding column-wise the model matrices for each element of a random effects structure.
+#'
+#' @param object An object inheriting from class `reStruct`, representing a random effects
+#'   structure as a list of `pdMat` objects.
+#' @param data A data frame in which to evaluate the variables defined in `formula(object)`.
+#' @param contrast An optional named list specifying contrasts for factor variables in `data`.
+#' @param ... Additional arguments passed to methods.
+#' @return A matrix obtained by binding together, column-wise, the model matrices for each
+#'   element of `formula(object)`.
+#' @author Andrzej Galecki, Tomasz Burzykowski
+#' @seealso \code{\link[stats]{model.matrix}}
 #' @export
-#' @param object an object inheriting from class \code{reStruct}, representing a random effects structure and consisting of a list of pdMat objects.
-#' @param data a data frame in which to evaluate the variables defined in \code{formula(object)}.
-#' @param contrast an optional named list specifying the contrasts to be used for representing the \code{factor} variables in data.
-#'  The components names should match the names of the variables in data for which the contrasts are to be specified. The components of this list
-#'  will be used as the contrasts attribute of the corresponding factor. If missing, the default contrast specification is used.
-#' 
-#' @return a matrix obtained by binding together, column-wise, the model matrices for each element of formula(object)..
-#' @author Based on documentation for \code{model.matrix.reStruct} in \code{nlme} package by Jose Pinheiro and Douglas Bates.
-##' @seealso \code{\link{model.matrix}}
-## #' @examples
-## #'  \dontrun{
-## #'   Pwr (fm1)
-## #' }
-
-model.matrix.reStruct.U<-
-function (object, data, contrast = NULL, ...) 
-{
+#' @examples
+#' \dontrun{
+#'   Pwr(fm1)
+#' }
+model.matrix.reStruct.U <- function(object, data, contrast = NULL, ...) {
    .functionLabel <- "model.matrix.reStruct.U"           # Function label (recommended)
    .traceR <- attr(options()$traceR, "fun")
    .traceR <-  if (is.null(.traceR)) function(...){} else .traceR      
    
-       
     .traceR(1, lbl = "-> model.matrix.reStruct.U STARTS")
     pdDef <- !(length(object) == 1 && inherits(object[[1]],"pdKronecker"))
 
