@@ -21,7 +21,7 @@ Type 'q()' to quit R.
 
 > 
 > date()
-[1] "Sat Aug  2 12:50:11 2025"
+[1] "Sun Aug  3 21:16:19 2025"
 > sessionInfo()
 R version 4.5.1 (2025-06-13 ucrt)
 Platform: x86_64-w64-mingw32/x64
@@ -84,7 +84,7 @@ Positive definite matrix structure of class pdLogChol representing
 +         pD1 = pd1,
 +         pD2 = pd2)
 > 
-> # R203a
+> # R20.3a
 > f1 <- gl(2, 1, labels = c("A","B")) 
 > f2 <- gl(2, 1, labels = c("a","b"))
 > (dt <- data.frame(f1, f2))
@@ -94,13 +94,13 @@ Positive definite matrix structure of class pdLogChol representing
 > 
 > 
 > 
-> # R203b
+> # R20.3b
 > library(nlmeUpdK)
 > methods(class= pdKronecker)
  [1] [             coef          coef<-        corMatrix     formula      
  [6] isInitialized logDet        matrix<-      Names         Names<-      
-[11] pdConstruct   pdFactor      pdMatrix      solve         summary      
-[16] VarCorr      
+[11] pdConstruct   pdFactor      pdMatrix      print         solve        
+[16] summary       VarCorr      
 see '?methods' for accessing help and source code
 > (pdK <- pdKronecker(pdL1, data = dt))      # D1 @ D2
 Positive definite matrix structure of class pdKronecker representing
@@ -109,6 +109,15 @@ f1A:f2a       6      12      18      36
 f1A:f2b      12      30      36      90
 f1B:f2a      18      36      60     120
 f1B:f2b      36      90     120     300
+Matrix is a Kronecker product of the following covariance profiles: 
+            (Intercept)
+(Intercept)           6
+    f1A f1B
+f1A   1   3
+f1B   3  10
+    f2a f2b
+f2a   1   2
+f2b   2   5
 > 
 > 
 > # R20.4
@@ -140,7 +149,7 @@ f2b   2   5
 
 > formula(pdK)                              # One-sided formula (default)
 ~f2:f1 - 1
-<environment: 0x000001fe8f4065a8>
+<environment: 0x0000022b10261b90>
 > 
 > # R20.5b
 > (pdKform <- formula(~(f2-1):(f1-1)-1))
@@ -151,7 +160,6 @@ f2b   2   5
 > attr(pdKterms, "intercept")               # Intercept omitted
 [1] 0
 > 
-> # library(nlmeForTesting)
 > (nms <- Names(pdK))
 [1] "f1A:f2a" "f1A:f2b" "f1B:f2a" "f1B:f2b"
 > dimnames(Dx) <- list(nms, nms)
@@ -164,11 +172,11 @@ f1B:f2b      36      90     120     300
 > methods(class = pdKronecker)   
  [1] [             coef          coef<-        corMatrix     formula      
  [6] isInitialized logDet        matrix<-      Names         Names<-      
-[11] pdConstruct   pdFactor      pdMatrix      solve         summary      
-[16] VarCorr      
+[11] pdConstruct   pdFactor      pdMatrix      print         solve        
+[16] summary       VarCorr      
 see '?methods' for accessing help and source code
 > packageVersion("nlmeUpdK")
-[1] '0.3.11'
+[1] '0.3.25'
 > sessionInfo()
 R version 4.5.1 (2025-06-13 ucrt)
 Platform: x86_64-w64-mingw32/x64
@@ -191,7 +199,7 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] nlmeUpdK_0.3-11 nlme_3.1-166   
+[1] nlmeUpdK_0.3-25 nlme_3.1-166   
 
 loaded via a namespace (and not attached):
 [1] compiler_4.5.1 tools_4.5.1    grid_4.5.1     lattice_0.22-6
@@ -200,4 +208,4 @@ loaded via a namespace (and not attached):
 > 
 > proc.time()
    user  system elapsed 
-   0.17    0.14    0.37 
+   0.14    0.10    0.42 

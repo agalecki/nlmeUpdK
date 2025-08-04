@@ -1,5 +1,3 @@
-#' File: model.matrix.reStructU.txt
-#'
 #' Create Model Matrix for reStruct Object
 #'
 #' Replaces `model.matrix.reStruct` in the `nlme` package, creating a model matrix by

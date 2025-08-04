@@ -2,7 +2,7 @@
 % Please edit documentation in R/pdKroneckerConstruct.R
 \name{pdKronecker}
 \alias{pdKronecker}
-\title{File: pdKroneckerConstruct.txt}
+\title{Construct a Positive-Definite Kronecker Product Object}
 \usage{
 pdKronecker(
   value = numeric(0),
@@ -26,18 +26,10 @@ A `pdKronecker` object, also inheriting from class `pdMat`, representing a
   positive-definite Kronecker product matrix.
 }
 \description{
-Construct a Positive-Definite Kronecker Product Matrix
-}
-\details{
 This function constructs a `pdKronecker` object, representing a positive-definite matrix
 based on the Kronecker product of underlying positive-definite matrices, each represented
 by individual `pdMat` objects. The first element is of class `pdIdent` and acts as a scale
 multiplier.
-}
-\examples{
-\dontrun{
-  runScript()
-}
 }
 \author{
 Andrzej Galecki, Tomasz Burzykowski

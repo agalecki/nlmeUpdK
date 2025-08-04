@@ -5,8 +5,6 @@
 \title{Assign Matrix to pdKronecker}
 \usage{
 \method{matrix}{pdKronecker}(object) <- value
-
-\method{matrix}{pdKronecker}(object) <- value
 }
 \arguments{
 \item{object}{A `pdKronecker` object.}
@@ -15,13 +13,37 @@
 }
 \value{
 The modified `pdKronecker` object.
-
-The modified `pdKronecker` object.
 }
 \description{
-Assigns a matrix to a `pdKronecker` object, updating its component matrices.
+Assigns a matrix to a `pdKronecker` object, updating its component matrices, as an S3 method for the `matrix<-` generic from the `nlme` package.
+}
+\examples{
+\dontrun{
+# Define matrices D1 and D2
+D1 <- matrix(c(3, 9, 9, 30), nrow = 2)  # Matrix for factor f1
+D2 <- matrix(c(2, 4, 4, 10), nrow = 2)  # Matrix for factor f2
+D1 \%x\% D2  # Kronecker product of D1 and D2
 
-Assigns a matrix to a `pdKronecker` object, updating its component matrices.
+# Create pdKronecker object
+library(nlme)
+pdId <- pdIdent(as.matrix(1), form = ~1)  # Identity matrix
+pd1 <- pdLogChol(D1, form = ~f1-1)       # pdLogChol for D1
+pd2 <- pdLogChol(D2, form = ~f2-1)       # pdLogChol for D2
+pdL1 <- list(X = pdId, pD1 = pd1, pD2 = pd2)
+
+# Create data frame with factors
+f1 <- gl(2, 1, labels = c("A", "B"))
+f2 <- gl(2, 1, labels = c("a", "b"))
+dt <- data.frame(f1, f2)
+
+# Create and modify pdKronecker object
+library(nlmeUpdK)
+pdK <- pdKronecker(pdL1, data = dt)
+new_matrix <- matrix(c(1, 2, 2, 4), nrow = 2) \%x\% matrix(c(1, 1, 1, 2), nrow = 2)
+dimnames(new_matrix) <- list(c("A:a", "A:b", "B:a", "B:b"), c("A:a", "A:b", "B:a", "B:b"))
+matrix(pdK) <- new_matrix  # Assign new matrix
+pdMatrix(pdK)  # Inspect modified matrix
+}
 }
 \author{
 Andrzej Galecki, Tomasz Burzykowski

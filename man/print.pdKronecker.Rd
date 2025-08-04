@@ -17,7 +17,33 @@
 Invisibly returns the object.
 }
 \description{
-Prints a `pdKronecker` object, displaying its matrix and component covariance profiles.
+Prints a `pdKronecker` object, displaying its matrix and component covariance profiles, as an S3 method for the `print` generic.
+}
+\examples{
+\dontrun{
+# Define matrices D1 and D2
+D1 <- matrix(c(3, 9, 9, 30), nrow = 2)  # Matrix for factor f1
+D2 <- matrix(c(2, 4, 4, 10), nrow = 2)  # Matrix for factor f2
+D1 \%x\% D2  # Kronecker product of D1 and D2
+
+# Create pdKronecker object
+library(nlme)
+pdId <- pdIdent(as.matrix(1), form = ~1)  # Identity matrix
+pd1 <- pdLogChol(D1, form = ~f1-1)       # pdLogChol for D1
+pd2 <- pdLogChol(D2, form = ~f2-1)       # pdLogChol for D2
+pdL1 <- list(X = pdId, pD1 = pd1, pD2 = pd2)
+
+# Create data frame with factors
+f1 <- gl(2, 1, labels = c("A", "B"))
+f2 <- gl(2, 1, labels = c("a", "b"))
+dt <- data.frame(f1, f2)
+
+# Create and print pdKronecker object
+library(nlmeUpdK)
+pdK <- pdKronecker(pdL1, data = dt)
+print(pdK)  # Print pdKronecker object
+print(pdK, opt = 0)  # Print without component matrices
+}
 }
 \author{
 Andrzej Galecki, Tomasz Burzykowski

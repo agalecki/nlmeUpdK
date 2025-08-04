@@ -1,11 +1,5 @@
-#### Replace the function in nlme namespace (i.e. replace model.matrix.reStruct with model.matrix.reStruct.U)
 
 library(nlme)
-## require(R.utils)
-R.utils:::reassignInPackage("model.matrix.reStruct", "nlme", fun)
-#require(testthat)
-#as.character(body(getS3method("model.matrix","reStruct")))[2]
-#testhat(
 
 ###################################################
 ### code chunk: Chap17a_init (script from Chapter 17 pertaining to pdKronecker class)
@@ -172,11 +166,5 @@ printCoefmat(fixed.DV2.Kron1, digits = 3, cs.ind = c(1, 2),
              dig.tst = 2, zap.ind = 5)
 anova(fm17.6, type = "marginal")
 
-#detach("package:R.utils")
-#detach("package:R.oo")
-#detach("package:R.methodsS3")
-unloadNamespace("R.utils")
-unloadNamespace("R.oo")
-unloadNamespace("R.methodsS3")
 sessionInfo()
-proc.time()
+

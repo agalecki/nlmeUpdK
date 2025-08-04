@@ -5,20 +5,14 @@
 \title{Unlist Names for pdKronecker}
 \usage{
 unlistFun(namesList)
-
-unlistFun(namesList)
 }
 \arguments{
 \item{namesList}{A list of character vectors containing names.}
 }
 \value{
 A character vector of combined names.
-
-A character vector of combined names.
 }
 \description{
-Creates a character vector of names by combining names from a list using a Kronecker product-like structure.
-
 Creates a character vector of names by combining names from a list using a Kronecker product-like structure.
 }
 \author{

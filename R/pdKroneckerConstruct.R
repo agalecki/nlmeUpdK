@@ -1,6 +1,4 @@
-#' File: pdKroneckerConstruct.txt
-#'
-#' Construct a Positive-Definite Kronecker Product Matrix
+#' Construct a Positive-Definite Kronecker Product Object 
 #'
 #' This function constructs a `pdKronecker` object, representing a positive-definite matrix
 #' based on the Kronecker product of underlying positive-definite matrices, each represented
@@ -16,10 +14,6 @@
 #'   positive-definite Kronecker product matrix.
 #' @author Andrzej Galecki, Tomasz Burzykowski
 #' @export
-#' @examples
-#' \dontrun{
-#'   runScript()
-#' }
 pdKronecker <- function(value = numeric(0), form = NULL, nam = NULL,
                         data = sys.frame(sys.parent())) {
    .functionLabel <- "pdKronecker"                 # Function label (recommended)
@@ -34,8 +28,6 @@ pdKronecker <- function(value = numeric(0), form = NULL, nam = NULL,
     pdConstruct(object, value, form, nam, data)
 }
 
-#' File: pdKroneckerConstruct.txt
-#'
 #' Construct pdKronecker Object
 #'
 #' Constructs a `pdKronecker` object from provided values, formulas, and names, ensuring
@@ -217,15 +209,10 @@ pdConstruct.pdKronecker <- function(object, value = numeric(0),
     if (!all(unlist(lapply(object, inherits, "pdMat")))) {
         stop("all elements in the argument must inherit from pdMat objects")
     }
- ### Inserted Starts  
  
     InitX  <- all(unlist(lapply(object,isInitialized)))
  
-    if (InitX) {
-      object <- KroneckAux(object)  # :::
- 
-    }
-### Inserted Ends
+    if (InitX) object <- KroneckAux(object) 
     namesList <- lapply(object, Names)  
 
     lNam <- unlist(lapply(namesList, length))

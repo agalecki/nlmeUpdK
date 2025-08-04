@@ -2,7 +2,7 @@
 % Please edit documentation in R/pdKroneckerConstruct.R
 \name{pdConstruct.pdKronecker}
 \alias{pdConstruct.pdKronecker}
-\title{File: pdKroneckerConstruct.txt}
+\title{Construct pdKronecker Object}
 \usage{
 \method{pdConstruct}{pdKronecker}(
   object,
@@ -33,9 +33,6 @@
 A constructed `pdKronecker` object.
 }
 \description{
-Construct pdKronecker Object
-}
-\details{
 Constructs a `pdKronecker` object from provided values, formulas, and names, ensuring
 compatibility of dimensions and proper initialization of component `pdMat` objects.
 }

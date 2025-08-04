@@ -5,8 +5,6 @@
 \title{Assign Names to pdKronecker}
 \usage{
 \method{Names}{pdKronecker}(object, ...) <- value
-
-\method{Names}{pdKronecker}(object, ...) <- value
 }
 \arguments{
 \item{object}{A `pdKronecker` object.}
@@ -17,13 +15,35 @@
 }
 \value{
 The modified `pdKronecker` object.
-
-The modified `pdKronecker` object.
 }
 \description{
-Assigns new names to a `pdKronecker` object.
+Assigns new names to a `pdKronecker` object, as an S3 method for the `Names<-` generic from the `nlme` package.
+}
+\examples{
+\dontrun{
+# Define matrices D1 and D2
+D1 <- matrix(c(3, 9, 9, 30), nrow = 2)  # Matrix for factor f1
+D2 <- matrix(c(2, 4, 4, 10), nrow = 2)  # Matrix for factor f2
+D1 \%x\% D2  # Kronecker product of D1 and D2
 
-Assigns new names to a `pdKronecker` object.
+# Create pdKronecker object
+library(nlme)
+pdId <- pdIdent(as.matrix(1), form = ~1)  # Identity matrix
+pd1 <- pdLogChol(D1, form = ~f1-1)       # pdLogChol for D1
+pd2 <- pdLogChol(D2, form = ~f2-1)       # pdLogChol for D2
+pdL1 <- list(X = pdId, pD1 = pd1, pD2 = pd2)
+
+# Create data frame with factors
+f1 <- gl(2, 1, labels = c("A", "B"))
+f2 <- gl(2, 1, labels = c("a", "b"))
+dt <- data.frame(f1, f2)
+
+# Create and modify pdKronecker object
+library(nlmeUpdK)
+pdK <- pdKronecker(pdL1, data = dt)
+Names(pdK) <- c("X1:a", "X1:b", "X2:a", "X2:b")  # Assign new names
+Names(pdK)  # Inspect modified names
+}
 }
 \author{
 Andrzej Galecki, Tomasz Burzykowski

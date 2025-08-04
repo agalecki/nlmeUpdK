@@ -17,20 +17,8 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 'help.start()' for an HTML browser interface to help.
 Type 'q()' to quit R.
 
-> ### Modify NAMESPACE in nlme package (i.e. replace model.matrix.reStruct with model.matrix.reStruct.U)
-> 
-> fun <- nlmeUpdK:::model.matrix.reStruct.U
-> environment(fun) <- .GlobalEnv
-> environment(fun)
-<environment: R_GlobalEnv>
-> 
 > 
 > library(nlme)
-> ## require(R.utils)
-> R.utils:::reassignInPackage("model.matrix.reStruct", "nlme", fun)
-> #require(testthat)
-> #as.character(body(getS3method("model.matrix","reStruct")))[2]
-> #testhat(
 > 
 > ###################################################
 > ### code chunk: Chap17a_init (script from Chapter 17 pertaining to pdKronecker class)
@@ -62,11 +50,10 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] reshape_0.8.9   lattice_0.22-6  nlmeUpdK_0.3-11 nlme_3.1-166   
+[1] reshape_0.8.9   lattice_0.22-6  nlmeUpdK_0.3-25 nlme_3.1-166   
 
 loaded via a namespace (and not attached):
-[1] compiler_4.5.1    plyr_1.8.9        tools_4.5.1       Rcpp_1.1.0       
-[5] R.methodsS3_1.8.2 grid_4.5.1        R.utils_2.12.3    R.oo_1.27.0      
+[1] compiler_4.5.1 plyr_1.8.9     Rcpp_1.1.0     grid_4.5.1    
 > 
 > data(prt, package = "nlmeU")
 > lme.spec.form3 <- spec.fo ~ prt.f + occ.f + sex.f + age.f + bmi + fiber.f +
@@ -341,12 +328,6 @@ DV:prt.f:fiber.f     2  4858   0.767  0.4645
 DV:occ.f:fiber.f     2  4858   3.610  0.0271
 DV:sex.f:age.f       2  4858   1.561  0.2101
 > 
-> #detach("package:R.utils")
-> #detach("package:R.oo")
-> #detach("package:R.methodsS3")
-> unloadNamespace("R.utils")
-> unloadNamespace("R.oo")
-> unloadNamespace("R.methodsS3")
 > sessionInfo()
 R version 4.5.1 (2025-06-13 ucrt)
 Platform: x86_64-w64-mingw32/x64
@@ -369,14 +350,12 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] reshape_0.8.9   lattice_0.22-6  nlmeUpdK_0.3-11 nlme_3.1-166   
+[1] reshape_0.8.9   lattice_0.22-6  nlmeUpdK_0.3-25 nlme_3.1-166   
 
 loaded via a namespace (and not attached):
 [1] compiler_4.5.1 plyr_1.8.9     tools_4.5.1    Rcpp_1.1.0     grid_4.5.1    
-> proc.time()
-   user  system elapsed 
-  14.53    1.56   18.26 
+> 
 > 
 > proc.time()
    user  system elapsed 
-  14.53    1.56   18.26 
+   9.60    1.07   17.67 

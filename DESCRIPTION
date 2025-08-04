@@ -1,5 +1,5 @@
 Package: nlmeUpdK
-Version: 0.3-20
+Version: 0.3-30
 Date: 2025-08-03
 Authors@R: c(
    person("Andrzej", "Galecki", email = "agalecki@umich.edu", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-3058-1312")),
@@ -24,8 +24,7 @@ Suggests:
     lattice,
     testthat,
     nlmeU,
-    reshape,
-    R.utils
+    reshape
 Encoding: UTF-8
 RoxygenNote: 7.3.2
 License: GPL-2

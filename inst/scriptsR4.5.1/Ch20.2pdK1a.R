@@ -24,14 +24,14 @@ pdL1 <-                                    # The main argument
         pD1 = pd1,
         pD2 = pd2)
 
-# R203a
+# R20.3a
 f1 <- gl(2, 1, labels = c("A","B")) 
 f2 <- gl(2, 1, labels = c("a","b"))
 (dt <- data.frame(f1, f2))
 
 
 
-# R203b
+# R20.3b
 library(nlmeUpdK)
 methods(class= pdKronecker)
 (pdK <- pdKronecker(pdL1, data = dt))      # D1 @ D2
@@ -55,7 +55,6 @@ pdKterms <- terms(pdKform)                # Terms object
 labels(pdKterms)                          # Expanded formula
 attr(pdKterms, "intercept")               # Intercept omitted
 
-# library(nlmeForTesting)
 (nms <- Names(pdK))
 dimnames(Dx) <- list(nms, nms)
 Dx

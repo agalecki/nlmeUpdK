@@ -5,21 +5,15 @@
 \title{Check Initialization of pdKronecker}
 \usage{
 \method{isInitialized}{pdKronecker}(object)
-
-\method{isInitialized}{pdKronecker}(object)
 }
 \arguments{
 \item{object}{A `pdKronecker` object.}
 }
 \value{
 Logical; `TRUE` if all components are initialized.
-
-Logical; `TRUE` if all components are initialized.
 }
 \description{
-Checks if a `pdKronecker` object is initialized.
-
-Checks if a `pdKronecker` object is initialized.
+Checks if a `pdKronecker` object is initialized, as an S3 method for the `isInitialized` generic from the `nlme` package.
 }
 \author{
 Andrzej Galecki, Tomasz Burzykowski

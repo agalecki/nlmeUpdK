@@ -2,7 +2,7 @@
 % Please edit documentation in R/model.matrix.reStructU.R
 \name{model.matrix.reStruct.U}
 \alias{model.matrix.reStruct.U}
-\title{File: model.matrix.reStructU.txt}
+\title{Create Model Matrix for reStruct Object}
 \usage{
 \method{model.matrix}{reStruct.U}(object, data, contrast = NULL, ...)
 }
@@ -21,9 +21,6 @@ A matrix obtained by binding together, column-wise, the model matrices for each
   element of `formula(object)`.
 }
 \description{
-Create Model Matrix for reStruct Object
-}
-\details{
 Replaces `model.matrix.reStruct` in the `nlme` package, creating a model matrix by
 binding column-wise the model matrices for each element of a random effects structure.
 }
